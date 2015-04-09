@@ -20,6 +20,8 @@ migo combines traditional upgrade sql files with etcd to create a system where u
  - amigo executes upgrade scripts on the sql database
  - applications using the migo package automatically update their sql queries after the schema was upgraded
 
+#### "features"
+Features refer to a subset of the database schema. Each feature has a version number which is a full integer (like the upgrade revision). A revision can increment feature versions or add a new feature (version 1). New feature versions can be 'breaking', which adds extra checks and a temporary hold on all programs using the feature while performing the upgrade.
 
 ### Local migo repository
 A migo repository contains the files for a migo-enforced database schema.
@@ -48,7 +50,7 @@ This directory contains only directories who's names are valid decimal positive 
 #### revision.yaml
 Revision information parameters.
 
- - features: array of name:version feature settings
+ - features: array of objects having fields `name string`, `version int`, `breaking bool`
 
 #### upgrade.sql
 Schema modifications. Can also include data migration statements.
